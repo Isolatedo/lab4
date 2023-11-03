@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>天气预报系统</title>
+    <link rel="stylesheet" type="text/css" href="weatherService.js">
+</head>
+<body>
+<h1>晷观天气预报系统</h1>
+<label for="city">请选择城市：</label>
+<select id="city">
+    <option value="北京">北京</option>
+</select>
+<button onclick="getWeather()">获取天气</button>
+<div id="weatherInfo"></div>
+
+<script src="weatherService.js"></script>
+</body>
+</html>

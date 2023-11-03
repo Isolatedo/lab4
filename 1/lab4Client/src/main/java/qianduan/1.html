@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人所得税计算</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+</head>
+<body>
+<h1>个人所得税计算</h1>
+<div class="container">
+    <input type="number" id="income">
+    <button onclick="calculate()">计算税率</button>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>工资范围</th>
+        <th>税率</th>
+        <th>速算扣除数</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>0-36000</td>
+        <td>3%</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>36001-144000</td>
+        <td>10%</td>
+        <td>2520</td>
+    </tr>
+    <tr>
+        <td>144001-300000</td>
+        <td>20%</td>
+        <td>16920</td>
+    </tr>
+    <tr>
+        <td>300001-420000</td>
+        <td>25%</td>
+        <td>31920</td>
+    </tr>
+    <tr>
+        <td>420001-660000</td>
+        <td>30%</td>
+        <td>52920</td>
+    </tr>
+    <tr>
+        <td>660001-960000</td>
+        <td>35%</td>
+        <td>85920</td>
+    </tr>
+    <tr>
+        <td>960001及以上</td>
+        <td>45%</td>
+        <td>181920</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<p id="result"></p>
+
+<script>
+    function calculate() {
+        const income = document.getElementById("income").value;
+        axios.get(`http://localhost:9090/useTax/${income}`)
+            .then(response =>{
+                const result = response.data;  // 获取计算结果
+                document.getElementById("result").innerHTML = `您需要缴纳的税费为 ${result} 元`;
+            })
+            .catch(error=>{
+                console.log(error);
+            })
+    }
+</script>
+</body>
+</html>
